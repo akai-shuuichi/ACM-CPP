@@ -17,6 +17,6 @@ int main(){
 int a,b,x,y;
 cin>>a>>b;
 //cout<<__gcd(a,b);
-cout<<Exgcd(a,b,x,y);
+cout<<Exgcd(a,b,x,y)<<endl;;
 cout<<x<<" "<<y;
 }
