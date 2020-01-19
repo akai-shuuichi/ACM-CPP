@@ -12,13 +12,13 @@
     
     "request": "launch",
     
-    "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe",
+    "program": "C:\\Users\\92892\\Desktop/${fileBasenameNoExtension}.exe",
     
     "args": [],
     
     "stopAtEntry": false,
     
-    "cwd": "${workspaceFolder}",
+    "cwd": "C:\\Users\\92892\\Desktop",
     
     "environment": [],
     
@@ -54,13 +54,13 @@
     
     "request": "launch",
     
-    "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe",
+    "program": "C:\\Users\\92892\\Desktop/${fileBasenameNoExtension}.exe",
     
     "args": [],
     
     "stopAtEntry": false,
     
-    "cwd": "${workspaceFolder}",
+    "cwd": "C:\\Users\\92892\\Desktop",
     
     "environment": [],
     
