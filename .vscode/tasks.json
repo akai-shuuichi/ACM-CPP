@@ -39,6 +39,7 @@
     "label": "build & run file",
     
     "type": "shell",
+    // tp
     
     "command": "g++",
     
