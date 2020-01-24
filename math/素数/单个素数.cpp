@@ -1,3 +1,4 @@
+//long long级别的素数可能会t
 #include<bits/stdc++.h>
 using namespace std;
 bool isPrime(int a) {
