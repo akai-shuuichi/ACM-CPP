@@ -23,20 +23,7 @@ struct mat
         val[0][0] = val[1][1] = 1;
     }
 };
-long long qpow(long long a, int n)
-{
-    long long ans = 1;
-    while (n)
-    {
-        if (n & 1)
-        {
-            ans *= a;
-        }
-        a *= a;
-        n >>= 1;
-    }
-    return ans;
-}
+
 inline mat matpow(mat a, int n)
 {
     mat ans = {0};
@@ -79,3 +66,5 @@ int main()
     tps = tps.mul(ans);
     printf("%lld", tps.val[0][1]);
 }
+
+
