@@ -1,0 +1,95 @@
+package testm;
+import java.io.IOException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import com.zyg.dao.JobDao;
+import com.zyg.entity.Job;
+/**
+ * @title  读取html的核心代码
+ * @author 付军
+ * @date   2019-06-24
+ */
+public class DataUtil {
+    private	String  jobName;
+    private	  String  sale;
+    private	  String  companyName;
+    private	  String  address;
+    private	  String  jingyan;
+    private	  String  xueli;
+    private	  String  companyInfo;
+    private	  int num=0;
+    private     JobDao   jd=new JobDao();
+    public void  readData(String kw,int page) {
+        try {
+            // 通过url获取到该页面生成的文档对象   所有的数据都保存在该对象中
+            Document  doc=	Jsoup.connect("https://www.zhipin.com/job_detail/?query="+kw+"&city=101180100&page="+page).get();
+            //通过div的类名   获取到页面该类名的所有元素的对象 放置到一个元素中
+            Elements  es=    doc.getElementsByClass("job-list");
+            //从该组中获取指定的div元素
+            Element  divlist=  es.get(0);
+            // 从指定的div元素中获取  li元素
+            Elements lis= divlist.getElementsByTag("li");
+            for(int i=0;i<lis.size();i++) {
+                //按照索引值 获取到指定 li标签
+                Element li= lis.get(i);
+                //通过class=job-title 找到对应的div
+                Element title=	li.getElementsByClass("job-title").get(0);
+                //获取div的内容  赋值给 变量
+                jobName=title.text();
+                Element red= li.getElementsByClass("red").get(0);
+                sale=red.text();
+                Element company_text= li.getElementsByClass("company-text").get(0);
+                Element name= company_text.getElementsByClass("name").get(0);
+                companyName=name.text();
+                Element info_primary= li.getElementsByClass("info-primary").get(0);
+                Element  p=info_primary.getElementsByTag("p").get(0);
+                String stmsg=p.html();
+                String[] msg3=stmsg.split("<em class=\"vline\"></em>");
+                address=msg3[0];
+                jingyan=msg3[1];
+                xueli=msg3[2];
+                Element    companyInfo_p=company_text.getElementsByTag("p").get(0);
+                companyInfo=companyInfo_p.text();
+                System.out.println("职位："+jobName+"，工资:"+sale+"，公司名称:"+companyName+"，地址:"+address+"，经验:"+jingyan+"，学历:"+xueli+"，公司详情:"+companyInfo+"ID:"+(++num));
+                //将 数据保存到 数据库中
+                Job  job=new Job();
+                job.setAddress(address);
+                job.setCompanyInfo(companyInfo);
+                job.setCompanyName(companyName);
+                job.setJingyan(jingyan);
+                job.setJobName(jobName);
+                job.setXueli(xueli);
+                job.setSale(sale);
+                jd.saveJob(job);
+            }
+            //如何查询下一页
+            Elements pages=   doc.getElementsByClass("page");
+            if(pages.size()>0) {
+                Element pagea=pages.first();
+                Element next=pagea.getElementsByClass("next").get(0);
+                if(next.attr("href").contains("javascript")) {
+                    //说明这是最后一页
+                    //System.out.println(next.attr("href")+"没有下一页了");
+                }else {
+                    // 说明有下一页
+                    //System.out.println(next.attr("href"));
+                    //System.out.println("当前页数为@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+page);
+                    Thread.sleep(1000*30);
+                    readData(kw,page+1);
+                }
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    //方法的重载
+    public void  readData(String kw){
+        readData( kw,1);
+    }
+}
