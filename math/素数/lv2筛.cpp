@@ -21,7 +21,8 @@ int main()
     int n;
     scanf("%d",&n);
     oulasai(n);
+    cout<<x;
     for(int i=0;i<x;i++)//输出n以内的所有素数
-        printf("%d\n",prime[i]);
+      //  printf("%d\n",prime[i]);
     return 0;
 }
