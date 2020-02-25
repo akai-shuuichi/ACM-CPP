@@ -107,7 +107,7 @@ int main()
     while(cin >> n)
     {
         m.clear();
-        Find(n, rand() % (n - 1) + 1);//这是自己设置的一个数
+        Find(n, rand() *rand()*1ll*rand()&rand()% (n - 1) + 1);//这是自己设置的一个数
         cout<<n<<" = ";
        
         for(map<ll ,int>::iterator it = m.begin(); it != m.end();)

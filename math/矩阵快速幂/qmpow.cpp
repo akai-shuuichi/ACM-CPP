@@ -67,4 +67,3 @@ int main()
     printf("%lld", tps.val[0][1]);
 }
 
-

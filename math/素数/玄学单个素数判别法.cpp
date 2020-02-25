@@ -34,8 +34,10 @@ bool millerRabbin(int n) {//米勒-拉宾(MillerRabbin)素性测试算法
   return 1;
 }
 int main(){
+
 int n;
 cin>>n;
-cout<<millerRabbin(n);
+srand((unsigned)time(NULL));
+cout<<(millerRabbin(n)?"YES":"NO");
 
 }

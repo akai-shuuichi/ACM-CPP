@@ -12,6 +12,7 @@ ll qpow(ll a,ll b,ll mod)
         ans=ans*base;
         }
         base=base*base;
+        
         ans%=mod;
         base%=mod;
         b = b >> 1;
