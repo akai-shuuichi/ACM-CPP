@@ -154,6 +154,30 @@ void rm_rf(List* head) {
     head->next = NULL;
 
 }
+void listrev(List *head){
+    for(auto tp=head->next;tp;){
+        auto temp=tp->next;
+        if(tp->next) {
+            tp->pre->next = tp->next;
+            tp->next->pre = tp->pre;//暂时删除此节点
+        }
+        else{//防止空指针
+            tp->pre->next=tp->next;
+        }
+        head->insertnext(tp);
+        tp=temp;
+    }
+}
+int cmp(List a,List b){
+    return a.val<b.val;
+}
+void shabicaihuiyongdemaopaopaixu(List *head){
+    for(auto i=head->next;i;i=i->next){
+        for(auto j=head->next;j!=i;j=j->next){
+            if(cmp(*i,*j))swap(i->val,j->val);
+        }
+    }
+}
 int main() {
     auto head = new List;
     create(head, 10);//创建一个长度为10的链表
@@ -161,10 +185,12 @@ int main() {
     //listdel(head, 3);//删掉第三个
     //listins(head, 4, 666);//在第四个前插入值
     outlist(head);
-    delrange(head, 2, 5);//删除大于2小于5的值
+    //delrange(head, 2, 5);//删除大于2小于5的值
     //cout << getmax(head) << endl;;//输出最大值的位置
     //outlist(head);
-    rm_rf(head);
-    outlist(head);
-
+   //rm_rf(head);
+   listrev(head);
+   outlist(head);
+   shabicaihuiyongdemaopaopaixu(head);
+   outlist(head);
 }
