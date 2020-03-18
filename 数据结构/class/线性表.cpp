@@ -25,7 +25,7 @@ struct List {
         return v;
     }
 };
-int listins(List* head, int pos, int val) {//在pos前插入元素
+int listins(List* head, int pos, int val){//在pos前插入元素
     if (pos<1 || pos>head->val)return -1;
     head->val++;
     int i = 1;
@@ -67,7 +67,10 @@ void create(List* head, int len) {//创建长度为len的链表
     head->pre = NULL;
     List* p = head;
     for (int i = 1; i <= len; i++) {
-        List* temp = new List(i);
+        int tp;
+        cout<<"请输入第"<<i<<"个元素的值\n";
+        cin>>tp;
+        List* temp = new List(tp);
         p->next = temp;
         temp->pre = p;
         p = p->next;
@@ -178,19 +181,62 @@ void shabicaihuiyongdemaopaopaixu(List *head){
         }
     }
 }
+string listfind(List *head,int val){
+    string ans="";
+    int i=1;
+    for (auto tp = head->next; tp; tp = tp->next,i++) {
+        if (tp->val==val) {
+            ans.push_back(i+'0');
+            ans.push_back(',');
+        }
+    }
+    ans.erase(ans.length()-1,1);
+    return ans;
+}
+string menu="1.创建链表\n2.输出链表\n3.插入节点\n4.删除节点\n5.查找元素\n0.退出\n";
 int main() {
     auto head = new List;
-    create(head, 10);//创建一个长度为10的链表
-    //listupdate(head, 5, 424);//把第5个更新
-    //listdel(head, 3);//删掉第三个
-    //listins(head, 4, 666);//在第四个前插入值
-    outlist(head);
-    //delrange(head, 2, 5);//删除大于2小于5的值
-    //cout << getmax(head) << endl;;//输出最大值的位置
-    //outlist(head);
-   //rm_rf(head);
-   listrev(head);
-   outlist(head);
-   shabicaihuiyongdemaopaopaixu(head);
-   outlist(head);
+    loop:;
+    cout<<menu;
+    int n;
+    cin>>n;
+    switch (n){
+        case 1:{
+            int len;
+            cout<<"输入长度\n";
+            cin>>len;
+            create(head,len);
+            break;
+        }
+        case 2:{outlist(head);break;}
+        case 3:{
+            int temp,pos;
+            cout<<"输入插入的值(插前面)\n";
+            cin>>temp;
+            cout<<"输入位置\n";
+            cin>>pos;
+            listins(head,pos,temp);
+            break;
+        }
+        case 4:{
+            int pos;
+            cout<<"输入删除位置\n";
+            cin>>pos;
+            listdel(head,pos);
+            break;
+        }
+        case 5:{
+            int val;
+            cout<<"输入查找元素\n";
+            cin>>val;
+            cout<<"位置是："<<listfind(head,val)<<endl;
+            break;
+        }
+        case 0:return 0;
+        default: ;//do nothing
+
+    }
+    goto loop;
+    return 0;
+
 }
